@@ -1,78 +1,73 @@
-# Accounting Oracle 2026
+# Welcome to your Lovable project
 
-**"What does 2026 hold for your ecommerce accounting journey?"**
+## Project info
 
-A mystical, interactive tarot card experience built for ecommerce accounting professionals. Users shuffle a deck of 39 accounting-themed fortune cards, draw one, and receive a shareable mystical reading — with animations, sound effects, and LinkedIn sharing built in.
+**URL**: https://lovable.dev/projects/9417c96c-10d2-46ae-8a3c-a108638ed8f6
 
-Live at: [myworks.software/oracle/](https://myworks.software/oracle/)
+## How can I edit this code?
 
----
+There are several ways of editing your application.
 
-## How it works
+**Use Lovable**
 
-1. **Home** — Crystal ball animation with a "Reveal My Fortune" CTA
-2. **Deck** — 5-card stack with a shuffle animation; user draws a random card
-3. **Fortune** — 3D card flip reveal with mystical copy, LinkedIn share, and "Draw again" option
+Simply visit the [Lovable Project](https://lovable.dev/projects/9417c96c-10d2-46ae-8a3c-a108638ed8f6) and start prompting.
 
-Each card has a canonical URL (`/oracle/card-XX`) that can be shared directly.
+Changes made via Lovable will be committed automatically to this repo.
 
----
+**Use your preferred IDE**
 
-## Tech stack
+If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
 
-| Layer | Tools |
-|---|---|
-| Framework | React 18, TypeScript, Vite 5 |
-| Routing | React Router 6 |
-| Styling | Tailwind CSS, shadcn-ui, Radix UI |
-| Server | Express (SPA fallback, serves `dist/`) |
-| Forms | React Hook Form + Zod |
-| Data fetching | TanStack React Query |
-| Analytics | localStorage-based (no external calls) |
+The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
----
-
-## Routing
-
-| Path | View |
-|---|---|
-| `/oracle/` | Home (crystal ball) |
-| `/oracle/card-XX` | Fortune card reveal (XX = 01–39) |
-| `/*` | 404 Not Found |
-
----
-
-## Local development
+Follow these steps:
 
 ```sh
-npm install
+# Step 1: Clone the repository using the project's Git URL.
+git clone <YOUR_GIT_URL>
+
+# Step 2: Navigate to the project directory.
+cd <YOUR_PROJECT_NAME>
+
+# Step 3: Install the necessary dependencies.
+npm i
+
+# Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
 
-### Production build & serve
+**Edit a file directly in GitHub**
 
-```sh
-npm run build
-npm start         # Express server on PORT (default 3000)
-```
+- Navigate to the desired file(s).
+- Click the "Edit" button (pencil icon) at the top right of the file view.
+- Make your changes and commit the changes.
 
-Vite base path is set to `/oracle/` — keep this in mind for any asset references.
+**Use GitHub Codespaces**
 
----
+- Navigate to the main page of your repository.
+- Click on the "Code" button (green button) near the top right.
+- Select the "Codespaces" tab.
+- Click on "New codespace" to launch a new Codespace environment.
+- Edit files directly within the Codespace and commit and push your changes once you're done.
 
-## Analytics & debug
+## What technologies are used for this project?
 
-Tracking is stored in `localStorage` only — nothing is sent to a server. In the browser console:
+This project is built with:
 
-```js
-window.__oracleDebug.getCounts()   // draw counts per card
-window.__oracleDebug.getEvents()   // event log (last 500)
-window.__oracleDebug.top(5)        // top 5 most-drawn cards
-window.__oracleDebug.clearAll()    // reset all tracking data
-```
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
 
----
+## How can I deploy this project?
 
-## Cards
+Simply open [Lovable](https://lovable.dev/projects/9417c96c-10d2-46ae-8a3c-a108638ed8f6) and click on Share -> Publish.
 
-39 accounting-themed fortune cards including: *Reconciliation Sage*, *Tax Deadline Dynamo*, *Cash Flow Crystal Ball*, *AI Ally Amulet*, and more. Card images are hosted on Supabase CDN; card back and background assets are bundled locally.
+## Can I connect a custom domain to my Lovable project?
+
+Yes, you can!
+
+To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+
+Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
