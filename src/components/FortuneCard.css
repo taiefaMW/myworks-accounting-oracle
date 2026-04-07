@@ -1,0 +1,145 @@
+/* ---------- Layout wrapper: center in viewport, no scroll ---------- */
+.card-flip-area{
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;          /* centers card + copy */
+  gap: clamp(10px, 1.8vh, 16px);    /* tighter spacing to copy */
+  padding: 16px;
+}
+
+/* ---------- Card container: viewport-safe sizing ---------- */
+.card-container{
+  position: relative;
+  /* base card footprint (never exceeds the viewport caps) */
+  width: min(19rem, 42vw);
+  height: min(28.75rem, 58svh);
+  max-width: 90vw;
+  max-height: 60svh;
+
+  transform-style: preserve-3d;
+  animation: card-rise .8s ease-out both;
+  /* scale for glow is applied on the container only (so faces keep their own transforms) */
+  transform: translateZ(0) scale(1);
+  transition: transform 600ms ease, filter 600ms ease;
+}
+
+/* During the magic glow: gentle enlarge without cropping */
+.card-container.glowing{
+  /* default gentle boost */
+  transform: translateZ(0) scale(1.06);
+  /* subtle highlight glow (optional but nice) */
+  filter: drop-shadow(0 0 30px rgba(246,215,111,.35));
+}
+
+/* When the flip starts, smoothly return to normal size (prevents snap) */
+.card-container.flipped{
+  transform: translateZ(0) scale(1);
+  filter: none;
+}
+
+/* Slightly reduce the temporary scale on very short screens to avoid cropping */
+@media (max-height: 760px){
+  .card-container.glowing{ transform: translateZ(0) scale(1.045); }
+}
+@media (max-height: 680px){
+  .card-container.glowing{ transform: translateZ(0) scale(1.035); }
+}
+
+/* Mobile: smaller footprint + conservative glow scale */
+@media (max-width: 640px){
+  .card-container{
+    width: min(16.5rem, 76vw);
+    height: min(25.5rem, 54svh);
+    max-height: 56svh;
+  }
+  .card-container.glowing{ transform: translateZ(0) scale(1.04); }
+}
+
+/* ---------- Faces & flip (Lovable-style: per-face rotate + opacity) ---------- */
+.card-face{
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 4px solid #F6D76F;
+  box-shadow: 0 20px 60px rgba(0,0,0,.45);
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: opacity 800ms ease, transform 800ms ease;
+}
+
+.card-face img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-back{  opacity: 1; transform: rotateY(0deg); }
+.card-front{ opacity: 0; transform: rotateY(-180deg); }
+
+.card-container.flipped .card-back  { opacity: 0; transform: rotateY(180deg); }
+.card-container.flipped .card-front { opacity: 1; transform: rotateY(0deg); }
+
+/* ---------- Magic glow & sparkles ---------- */
+.card-glow{
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  pointer-events: none;
+  box-shadow: 0 0 60px rgba(246,215,111,.5);
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse{
+  0%,100%{ box-shadow: 0 0 60px rgba(246,215,111,.50), 0 0 100px rgba(246,215,111,.25); }
+  50%    { box-shadow: 0 0 80px rgba(246,215,111,.80), 0 0 120px rgba(246,215,111,.45); }
+}
+
+@keyframes sparkle{
+  0%   { transform: scale(.85); opacity: 0; }
+  40%  { opacity: 1; }
+  100% { transform: scale(.5) translateY(-10px); opacity: 0; }
+}
+
+/* ---------- Entrance ---------- */
+@keyframes card-rise{
+  from{ opacity: 0; transform: translateY(50px) scale(1); }
+  to  { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* ---------- Copy below the card ---------- */
+.fortune-heading{
+  color: #F6D76F;
+  font-weight: 600;
+  font-size: clamp(1.25rem, 2.6vh, 1.8rem);
+  margin: 0;
+  text-align: center;
+}
+
+.fortune-subcopy{
+  color: #ffffff;
+  opacity: .9;
+  font-size: clamp(.9rem, 1.7vh, 1.05rem);
+  margin: 0;
+  text-align: center;
+  max-width: 28rem;
+}
+
+@media (min-width: 768px) {
+  .fortune-heading{
+    text-align: center;
+  }
+
+  .fortune-subcopy{
+    text-align: center;
+  }
+}
+
+/* Respect reduced-motion */
+@media (prefers-reduced-motion: reduce){
+  .card-container{ transition: none; animation: none; }
+  .card-face{ transition: none; }
+  .card-glow{ animation: none; }
+}
